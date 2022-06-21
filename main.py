@@ -61,7 +61,8 @@ X_test = sc.transform(X_test)
 
 # Creo el arbol
 
-clf = DecisionTreeClassifier(criterion="entropy", max_depth=3)
+from sklearn.ensemble import RandomForestClassifier
+clf = DecisionTreeClassifier(max_depth=5)
 
 # Entreno el arbol
 
@@ -78,7 +79,21 @@ export_graphviz(clf, out_file=dot_data,
                 filled=True, rounded=True,
                 special_characters=True,feature_names = feature_cols,class_names=['0','1'])
 graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
-graph.write_png('Fire2.png')
+graph.write_png('FireRF.png')
 Image(graph.create_png())
 
+# Genero la matriz de confusión
+
+cm = confusion_matrix(y_test, y_pred)
+
+fig, ax = plt.subplots(figsize=(7.5, 7.5))
+ax.matshow(cm, cmap=plt.cm.Blues, alpha=0.3)
+for i in range(cm.shape[0]):
+    for j in range(cm.shape[1]):
+        ax.text(x=j, y=i, s=cm[i, j], va='center', ha='center', size='xx-large')
+
+plt.xlabel('Predicción', fontsize=18)
+plt.ylabel('Reales', fontsize=18)
+plt.title('Matriz de confusión', fontsize=18)
+plt.show()
 
