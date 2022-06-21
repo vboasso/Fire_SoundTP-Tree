@@ -61,7 +61,7 @@ X_test = sc.transform(X_test)
 
 # Creo el arbol
 
-clf = DecisionTreeClassifier()
+clf = DecisionTreeClassifier(criterion="entropy", max_depth=3)
 
 # Entreno el arbol
 
@@ -78,7 +78,7 @@ export_graphviz(clf, out_file=dot_data,
                 filled=True, rounded=True,
                 special_characters=True,feature_names = feature_cols,class_names=['0','1'])
 graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
-graph.write_png('Fire.png')
+graph.write_png('Fire2.png')
 Image(graph.create_png())
 
 
